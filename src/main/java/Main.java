@@ -16,17 +16,16 @@ public class Main {
         Sheet sheet = wb.getSheetAt(1);
 
         FileOutputStream fos = new FileOutputStream(new File("src/main/resources/output.txt"));
-
+        fos.write(
+                "INSERT INTO \"CODICI_ATECO\" (\"CODICE\", \"DESCRIZIONE\", \"REDDITIVITA\", \"GESTIONE_PREVIDENZIALE\", \"MACROCATEGORIA\") VALUES "
+                        .getBytes());
         for (Row row : sheet) {
-            fos.write(
-                    "INSERT INTO CODICI_ATECO (CODICE, DESCRIZIONE, REDDITIVITA, GESTIONE_PREVIDENZIALE, MACROCATEGORIA) VALUES ("
-                            .getBytes());
-            for (Cell cell : row) {
-
+            fos.write("(".getBytes());
+            for (Cell cell : row) {          
                 switch (cell.getCellType()) {
                     case STRING:
                         fos.write("'".getBytes());
-                        fos.write(String.valueOf(cell.getStringCellValue()).getBytes());
+                        fos.write(String.valueOf(cell.getStringCellValue()).replace("'", "''").getBytes());
                         fos.write("'".getBytes());
                         break;
                     case NUMERIC:
@@ -41,7 +40,8 @@ public class Main {
                 }
                 fos.write(",".getBytes());
             }
-            fos.write(") \n".getBytes());
+            fos.write("), \n".getBytes());
         }
+        fos.write(");".getBytes());
     }
 }
