@@ -244,4 +244,8 @@ buildNumber.properties
 .history
 .ionide
 
+# addes 
+.DS_Store
+
+
 # End of https://www.toptal.com/developers/gitignore/api/maven,java,visualstudiocode,intellij,eclipse
